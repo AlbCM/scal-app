@@ -1,0 +1,38 @@
+.row-heading {
+    font-weight: 500;
+    font-size: .7em;
+    text-transform: uppercase
+  }
+  .timetable .time-label {
+    font-size: .6em;
+    font-weight: 500
+  }
+
+  .timetable {
+      text-align: left;
+      padding-left: .1em;
+  }
+
+  .timetable ul {
+    background: #ffffff;;
+    color: black;
+  }
+  .timetable .time-entry.vip-only {
+    background-color: #C490F5;
+    border: 1px solid #6A16B8
+  }
+  .timetable .time-entry.vip-only:hover {
+    background-color: #AE67F0
+  }
+  
+  .timetable .time-entry {
+    background-color: #0F1E82;
+    border: 1px solid #0F1E82
+  }
+  .timetable .time-entry:hover {
+    background-color: #0F1E82;
+  }
+
+  .margin-t-20 {
+    margin-top: 30px;
+  }

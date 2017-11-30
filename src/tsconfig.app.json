@@ -9,5 +9,6 @@
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
-  ]
+  ],
+  "includes": ["../node_modules/ng2-mqtt/index.ts"]
 }

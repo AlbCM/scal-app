@@ -1,0 +1,268 @@
+<div class="content-container">
+    <div class="content-area">
+                <h3>{{employee?.name}}
+                    <span class="label">{{employee?.rol}}</span>
+                </h3>
+                <span>CC. {{employee?.identificacion}}</span>
+        
+        <clr-tabs>
+                <clr-tab>
+                        <button clrTabLink>Resumen</button>
+                        <clr-tab-content>
+                                <div class="row">
+                                        <div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    Información del empleado
+                                                </div>
+                                                <div class="card-img">
+                                                        <img [src]="employee?.photoUrl" alt="">
+                                                </div>
+                                                <div class="card-block">
+                                                    <div class="card-text">
+                                                        <b>Nombre:</b> {{employee?.name}}
+                                                        <div>
+                                                            <b>Identificación: </b>
+                                                            {{employee?.identificacion}}
+                                                        </div>
+                                                        <div>
+                                                            <b>Tipo de empleado: </b>
+                                                            {{employee?.rol}}
+                                                        </div>
+                                                    </div>  
+                                                </div>       
+                                                <div class="card-footer" >
+                                                        <clr-button-group  class="btn-primary btn-sm" [clrMenuPosition]="'top-right'">
+                                                                <clr-button (click)="modalHuella.open()"  *ngIf="employee?.id < 0"  class="btn btn-primary btn-success">
+                                                                        <clr-icon shape="thumbs-up"></clr-icon>
+                                                                    Asociar huella
+                                                                </clr-button>    
+                                                                <clr-button (click)="modalEditarEmpleado.open()">
+                                                                        <clr-icon shape="pencil"></clr-icon>
+                                                                        <span *ngIf="!(employee?.id < 0); else hasNotFinger;">Editar empleado</span></clr-button>
+                                                                        <ng-template #hasNotFinger>
+                                                                            Editar
+                                                                        </ng-template>
+                                                                <clr-button (click)="modalEliminar.open()" [clrInMenu]="false" class="btn btn-danger">
+                                                                        <clr-icon shape="trash"></clr-icon>
+                                                                        Desvincular
+                                                                </clr-button>
+                                                        </clr-button-group>  
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                                <div class="card" >
+                                                    <div class="card-header">
+                                                       Horario semanal
+                                                    </div>
+                                                    <div #ttSetting class="timetable"></div>
+                                                    <div class="margin-t-20"></div>
+                                                    <div class="card-block">
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <clr-button-group  class="btn-sm" [clrMenuPosition]="'top-right'">
+                                                            <clr-button (click)="modalAsignarRegla.open()">
+                                                                <clr-icon shape="plus"></clr-icon>
+                                                                Asignar horario
+                                                            </clr-button>
+                                                            <clr-button>Editar Horario</clr-button>
+                                                            <clr-button (click)="modalEliminarRegla.open()">Eliminar Horario</clr-button>
+                                                        </clr-button-group>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                               
+                        </clr-tab-content>
+                    </clr-tab>
+                <clr-tab>
+                    <button clrTabLink>Asistencia</button>
+                    <clr-tab-content>
+                        <div class="row" style="padding-top: 1rem;">                            
+                            <div  class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="row">
+                                <div style="padding-top: 2rem;"></div>
+                                <div #asistencia id="asistencia" class="timetable"></div>
+                        </div>
+                    </clr-tab-content>
+                </clr-tab>
+        </clr-tabs>
+    </div>
+</div>
+
+<clr-modal #modalHuella>
+        <h3 class="modal-title">Asociar huella</h3>
+        <div class="modal-body">
+                <div style="padding-top: 1rem;"></div>
+                <div class="row">
+                  <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12"></div>
+                  <div class="col-lg-1 col-md-6 col-sm-12 col-xs-12">
+                      <img *ngIf="fingerprint" style="margin-top: 3em; margin-left: -0.5rem; height: 6rem;" class="card-" src="/assets/finger.svg" alt="">
+                      <img *ngIf="successful" style="margin-top: 3em; margin-left: -1.5rem; height: 6rem;" class="card-" src="/assets/ok.png" alt="">
+                      <img *ngIf="error" style="margin-top: 3em; margin-left: -1.5rem; height: 6rem;" class="card-" src="/assets/error.png" alt="">
+                  </div>
+                </div>
+                <div style="padding-top: 1rem;"></div>
+                <div class="row">
+                    <div style="width: 100%;">
+                        <h4 style="text-align: center;">{{status}}</h4>
+                    </div>
+                        
+                </div>
+                <div style="padding-top: 1rem;"></div>
+                <div class="row">
+                  <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+                  </div>
+                  <div class="col-lg-1 col-md-6 col-sm-12 col-xs-12">
+                      <button *ngIf="enrollButton" (click)="beginEnroll()" style="margin-left: -0.5rem;" class="btn btn-primary">Empezar</button>
+                  </div>
+                </div>
+          
+              <div class="spin" style="margin-top: 5em;" *ngIf="processingFlag">
+              <span class="spinner spinner-md spinner-inline"></span>
+              <label>Guardando...</label>
+              </div>                                          
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-link" (click)="modalHuella.close()">Salir</button>
+        </div>
+</clr-modal>
+<clr-modal #modalEliminar>
+        <h3 class="modal-title">Advertencia</h3>
+        <div class="modal-body">
+            Se borrarán los datos del empleado, ¿Desea continuar con esta operación?
+        </div>
+        <div class="modal-footer">
+            <button [clrLoading]="processing" class="btn btn-success-outline" (click)="deleteEmployee(modalEliminar)">Eliminar</button>
+            <button type="button" class="btn btn-link" (click)="modalEliminar.close()">Cancelar</button>
+        </div>
+</clr-modal>
+
+<clr-modal #modalEditarEmpleado>
+    <h3 class="modal-title">Editar empleado</h3>
+    <div class="modal-body">
+            <form>
+                    <section class="form-block">
+                        <div class="form-group" *ngIf="employee?.name!=null" >
+                                <label for="name" class="required">Identificación</label>
+                                <label for="name"
+                                        aria-haspopup="true"
+                                        role="tooltip"
+                                        [class.invalid]="!(employee.identificacion.length > 0)  && submitFlag"
+                                        class="tooltip tooltip-right tooltip-validation tooltip-sm">
+                                    <input [(ngModel)]="employee.identificacion" name="identiicacion" type="text" id="name" placeholder="" size="45">
+                                    <span class="tooltip-content">
+                                            Este campo no puede estar vacío.
+                                        </span>
+                                </label>
+                        </div>
+                      <div class="form-group" *ngIf="employee?.name!=null" >
+                        <label for="name" class="required">Nombre</label>
+                        <label for="name"
+                               aria-haspopup="true"
+                               role="tooltip"
+                               [class.invalid]="!(employee.name.length > 0)  && submitFlag"
+                               class="tooltip tooltip-right tooltip-validation tooltip-sm">
+                          <input [(ngModel)]="employee.name" name="name" type="text" id="name" placeholder="" size="45">
+                          <span class="tooltip-content">
+                                  Este campo no puede estar vacío.
+                              </span>
+                        </label>
+                      </div>
+                      <div class="form-group" *ngIf="employee?.rol!=null"  >
+                        <label for="tipo" class="required">Tipo de empleado</label>
+                        <div class="select">
+                          <select [(ngModel)]="employee.rol" name="category" id="tipo">
+                            <option value="Docente" aria-selected="true">Docente</option>
+                            <option value="Administrativo">Administrativo</option>
+                            <option value="Servicios generales">Servicios generales</option>
+                            <option value="Vigilancia">Vigilancia</option>
+                          </select>
+                        </div>
+                      </div>
+                    </section>
+                  </form>
+    </div>
+    <div class="modal-footer">
+        <button [clrLoading]="processing" type="button" class="btn btn-primary" (click)="updateEmployee(modalEditarEmpleado)">Guardar</button>
+        <button type="button" class="btn btn-link" (click)="modalEditarEmpleado.close()">Cancelar</button>
+    </div>
+</clr-modal>
+
+<clr-modal #modalAsignarRegla>
+        <h3 class="modal-title">Asignar regla</h3>
+        <div class="modal-body">
+                <form>
+                        <section class="form-block">
+                            <div class="form-group" >
+                                    <label for="dia" class="required">Dia</label>
+                                    <label for="dia"
+                                            aria-haspopup="true"
+                                            role="tooltip"
+                                            [class.invalid]="!(regla_nueva.dia.length > 0)  && submitFlag"
+                                            class="tooltip tooltip-right tooltip-validation tooltip-sm">
+                                            <div class="select">
+                                                    <select [(ngModel)]="regla_nueva.dia" name="dia" id="dia">
+                                                            <option value="0" aria-selected="true">Lunes</option>
+                                                            <option value="1">Martes</option>
+                                                            <option value="2">Miercoles</option>
+                                                            <option value="3">Jueves</option>
+                                                            <option value="4">Viernes</option>
+                                                            <option value="5">Sabado</option>
+                                                            <option value="6">Domingo</option>
+                                                          </select>
+                                            </div>
+                                            
+                                        <span class="tooltip-content">
+                                                Este campo no puede estar vacío.
+                                            </span>
+                                    </label>
+                            </div>
+                          <div class="form-group" *ngIf="employee?.name!=null" >
+                            <label for="name" class="required">Hora de entrada</label>
+                            <label for="name"
+                                   aria-haspopup="true"
+                                   role="tooltip"
+                                   [class.invalid]="!(employee.name.length > 0)  && submitFlag"
+                                   class="tooltip tooltip-right tooltip-validation tooltip-sm">
+                              <input [(ngModel)]="regla_nueva.hora_in" name="name" type="text" id="name" placeholder="HH:MM" size="45">
+                              <span class="tooltip-content">
+                                      Este campo no puede estar vacío.
+                                  </span>
+                            </label>
+                          </div>
+                          <div class="form-group" *ngIf="employee?.name!=null" >
+                                <label for="name" class="required">Hora de salida</label>
+                                <label for="name"
+                                       aria-haspopup="true"
+                                       role="tooltip"
+                                       [class.invalid]="!(employee.name.length > 0)  && submitFlag"
+                                       class="tooltip tooltip-right tooltip-validation tooltip-sm">
+                                  <input [(ngModel)]="regla_nueva.hora_out" name="name" type="text" id="name" placeholder="HH:MM" size="45">
+                                  <span class="tooltip-content">
+                                          Este campo no puede estar vacío.
+                                      </span>
+                                </label>
+                              </div>
+                        </section>
+                      </form>
+        </div>
+        <div class="modal-footer">
+            <button [clrLoading]="processing" type="button" class="btn btn-primary" (click)="addRule(modalAsignarRegla)">Guardar</button>
+            <button type="button" class="btn btn-link" (click)="modalAsignarRegla.close()">Cancelar</button>
+        </div>
+</clr-modal>
+
+<clr-modal #modalEliminarRegla>
+        <h3 class="modal-title">Advertencia</h3>
+        <div class="modal-body">
+            Se borrarán las reglas de asistencia del empleado, ¿Desea continuar con esta operación?
+        </div>
+        <div class="modal-footer">
+            <button [clrLoading]="processing" class="btn btn-success-outline" (click)="deleteRules(modalEliminarRegla)">Eliminar</button>
+            <button type="button" class="btn btn-link" (click)="modalEliminarRegla.close()">Cancelar</button>
+        </div>
+</clr-modal>

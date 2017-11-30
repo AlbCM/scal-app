@@ -1,0 +1,123 @@
+<div class="content-container">
+    <div class="content-area" style="padding-top: 0;">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <h4>Información general</h4>
+                <div class="row" style="width: 95%;">
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="card clickable" routerLink="/employees" style="background-color: #0F1E82; color: white;">
+                            <div class="card-block" style="margin-top: -1rem;">
+                                <h1>
+                                        <clr-icon class="is-inverse"  shape="users" size="64"></clr-icon>
+                                        <span style="color: white;">{{totalEmployees}}</span>
+                                </h1>
+                                <span>Empleados</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                            <div class="card" style="background-color: #318700; color: white;">
+                                <div class="card-block" style="margin-top: -1rem;">
+                                    <h1>
+                                            <clr-icon class="is-inverse" shape="clock" size="64"></clr-icon>
+                                            <span class="custom-card">{{pendingEmployees}}</span>
+                                    </h1>
+                                    <span>Sin asociar huella</span>
+                                </div>
+                            </div>
+                    </div>
+                     <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                        <div class="card custom-card" style="background-color: #F57600;">
+                            <div class="card-block" style="margin-top: -1rem;">
+                                <h1>
+                                    <clr-icon class="is-inverse" shape="clock" size="64"></clr-icon>
+                                    <span class="custom-card">0</span>
+                                </h1>
+                                <span>Empleados Inactivos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4>Asistencia puntual</h4>
+                <div class="row" style="padding-left: .2rem;">
+                        <div class="statistic-container">
+                            <div class="statistic">
+                                    <h1>
+                                            <span>{{weekAttendance}}</span>
+                                            <span>%</span>
+                                    </h1>
+                                    <span>Última semana</span>
+                            </div>
+                        </div>
+                        <div class="statistic-container">
+                                <div class="statistic">
+                                        <h1>
+                                                <span>{{monthAttendance}}</span>
+                                                <span>%</span>
+                                        </h1>
+                                        <span>Último mes</span>
+                                </div>
+                        </div>
+                        <div class="statistic-container">
+                                <div class="statistic last-statistic">
+                                        <h1>
+                                                <span>{{yearAttendance}}</span>
+                                                <span>%</span>
+                                        </h1>
+                                        <span>Último año</span>
+                                </div>
+                        </div>
+                            
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <h4>Asistencia general</h4>
+                <canvas style="width: 80%;" id="pie_chart"></canvas>
+            </div>
+          </div>
+          <div style=""></div>
+          <div id="dailyReport" class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <h4 style="">Distribución de empleados por rol</h4>
+                    <canvas style="width: 80%; padding-left: 2.5rem; padding-top: .5rem;" id="chart"></canvas>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <h4>Asistencia del día</h4>
+                        <clr-datagrid>
+                                <clr-dg-placeholder>No se ha encontrado registros!</clr-dg-placeholder>
+                                <clr-dg-column [clrDgField]="'name'">Empleado</clr-dg-column>
+                                <clr-dg-column [clrDgField]="'asistencia.tipo'">Entrada / Salida</clr-dg-column>
+                                <clr-dg-column [clrDgField]="'asistencia.hora'">Hora</clr-dg-column>
+                                <clr-dg-column [clrDgField]="'asistencia.atiempo'">A tiempo</clr-dg-column>
+                            
+                                <clr-dg-row *clrDgItems="let item of dailyReport">
+                                    <clr-dg-cell>{{item.name}}</clr-dg-cell>
+                                    <clr-dg-cell>
+                                            <clr-icon *ngIf="item?.asistencia.tipo === 'in'; else out" shape="caret"></clr-icon>
+                                            <ng-template #out>
+                                                    <clr-icon shape="caret" dir="down"></clr-icon>
+                                            </ng-template>
+                                    </clr-dg-cell>
+                                    <clr-dg-cell>{{item.asistencia.hora}}</clr-dg-cell>
+                                    <clr-dg-cell>
+                                            <clr-icon *ngIf="item?.asistencia.atiempo; else notAtTime" shape="check"></clr-icon>
+                                            <ng-template #notAtTime>
+                                                    <clr-icon shape="times"></clr-icon>
+                                            </ng-template>
+                                    </clr-dg-cell>
+                                </clr-dg-row>
+                            
+                                <clr-dg-footer>
+                                                {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                                                de {{pagination.totalItems}} registros.
+                                                <clr-dg-pagination #pagination [clrDgPageSize]="4"></clr-dg-pagination>
+                                </clr-dg-footer>
+                            </clr-datagrid>
+                    </div>
+                
+              
+                
+                          
+          </div>
+    </div>
+</div>

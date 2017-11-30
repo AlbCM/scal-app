@@ -1,0 +1,41 @@
+<div class="main-container">
+  <div class="alert alert-app-level">
+  </div>
+  <header class="header header-6">
+    <div class="branding">
+      <a class="logo-and-title" routerLink="/home" href="">
+        <span class="clr-icon clarity-logo">
+          <clr-icon class="logo-color" shape="building"></clr-icon>
+        </span>
+        <span class="title">Colegio Visión Mundial</span>
+      </a>
+    </div>
+    <div class="divider"></div>
+    <div class="header-nav clr-nav-level-1">
+      <a class="nav-link" id="home-link" routerLink="/employees" routerLinkActive="active" >
+      <div class="nav-text">
+        Empleados
+      </div>
+      </a>
+    </div>
+    
+    <div class="header-actions">
+        <form class="search">
+            <label for="search_input">
+              <input  [(ngModel)]="service.filter.name" name="search_input" type="text" placeholder="Buscar empleado...">
+            </label>
+          </form>
+          <clr-dropdown>
+              <button class="nav-icon" clrDropdownTrigger>
+                  <clr-icon shape="cog"></clr-icon>
+                  <clr-icon shape="caret down"></clr-icon>
+              </button>
+              <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                  <a (click)="logout()" clrDropdownItem>Salir</a>
+              </clr-dropdown-menu>
+          </clr-dropdown>
+        
+    </div>
+  </header>
+  <router-outlet></router-outlet>
+</div>

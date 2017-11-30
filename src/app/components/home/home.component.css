@@ -1,0 +1,22 @@
+.custom-card {
+    color: white;
+}
+
+.statistic {
+    border-right: 1px solid black; 
+    padding-right: 2.2rem;
+}
+
+.statistic-container {
+    padding: 1.2rem;
+    padding-top: 0;
+}
+
+.statistic > h1 {
+    font-size: 2rem;
+}
+
+.last-statistic {
+    border-right: none;
+    padding-right: 0
+}

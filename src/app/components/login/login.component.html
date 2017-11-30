@@ -1,0 +1,23 @@
+<div class="login-wrapper">
+  <form class="login">
+    <label class="title">
+      <h3 class="welcome">Bienvenido</h3>
+      Colegio Visión Mundial
+      <h5 class="hint">Utilice sus credenciales para iniciar sesión</h5>
+    </label>
+    <div class="login-group">
+      <input class="username" type="text" id="login_username" placeholder="Usuario">
+      <input class="password" type="password" id="login_password" placeholder="Contraseña">
+      <div class="checkbox">
+        <input type="checkbox" id="rememberme">
+        <label for="rememberme">
+          Mantenerse conectado
+        </label>
+      </div>
+      <div class="error">
+        Invalid user name or password
+      </div>
+      <button (click)="redirect()" type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </div>
+  </form>
+</div>

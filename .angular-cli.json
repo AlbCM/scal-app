@@ -19,9 +19,19 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "../node_modules/clarity-icons/clarity-icons.min.css",
+        "../node_modules/clarity-ui/clarity-ui.min.css",
+        "../node_modules/jquery-schedule/dist/jquery.schedule.min.css",
+        "../node_modules/font-awesome/css/font-awesome.min.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/@webcomponents/custom-elements/custom-elements.min.js",
+        "../node_modules/clarity-icons/clarity-icons.min.js",
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/jqueryui/jquery-ui.min.js",
+        "../node_modules/jquery-schedule/dist/jquery.schedule.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

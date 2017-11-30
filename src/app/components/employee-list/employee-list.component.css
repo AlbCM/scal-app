@@ -1,0 +1,13 @@
+.card-footer > .btn-link {
+}
+
+.finger {
+    display: inline-block;
+    float: right;
+    margin-top: 0rem;
+    width: 0.80rem;
+    height: 0.8rem;
+    background: url("/assets/finger2.svg");
+    background-size: 0.8rem;
+}
+

@@ -1,0 +1,52 @@
+{
+  "_from": "ng2-mqtt",
+  "_id": "ng2-mqtt@0.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-hrX+2ZR12/blO+735Kt+/ZQQVNI=",
+  "_location": "/ng2-mqtt",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "ng2-mqtt",
+    "name": "ng2-mqtt",
+    "escapedName": "ng2-mqtt",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng2-mqtt/-/ng2-mqtt-0.1.2.tgz",
+  "_shasum": "86b5fed99475dbf6e53beef7e4ab7efd941054d2",
+  "_spec": "ng2-mqtt",
+  "_where": "/Users/seardy/Projects/scal-app",
+  "author": {
+    "name": "westin"
+  },
+  "bugs": {
+    "url": "https://github.com/icanos/ng2-mqtt/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Port of mqttws31 library for angular2",
+  "homepage": "https://github.com/icanos/ng2-mqtt#readme",
+  "keywords": [
+    "angular2",
+    "mqtt",
+    "mqttws31"
+  ],
+  "license": "Apache-2.0",
+  "main": "./index",
+  "name": "ng2-mqtt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/icanos/ng2-mqtt.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.1.2"
+}

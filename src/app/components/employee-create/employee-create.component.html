@@ -1,0 +1,155 @@
+<clr-wizard #wizard [(clrWizardOpen)]="lgOpen" clrWizardSize="xl">
+  <clr-wizard-title>Nuevo empleado</clr-wizard-title>
+
+  <clr-wizard-button [type]="'cancel'">Cancelar</clr-wizard-button>
+  <clr-wizard-button [type]="'previous'">Atras</clr-wizard-button>
+  <clr-wizard-button [type]="'next'">Siguiente</clr-wizard-button>
+  <clr-wizard-button [type]="'finish'">Finalizar</clr-wizard-button>
+
+  <clr-wizard-page clrWizardPagePreventDefault="true"
+                   (clrWizardPageOnCommit)="onCommit()"
+                   (clrWizardPageOnCancel)="doCancel()">
+    <ng-template clrPageTitle>Datos básicos</ng-template>
+    <label>Para registrar un empleado debe llenar el siguiente formulario con los datos básicos</label>
+    <div style="margin-bottom: 1em;"></div>
+    <form>
+      <section class="form-block">
+        <div class="form-group">
+          <label for="name" class="required">Nombres</label>
+          <label for="name"
+                 aria-haspopup="true"
+                 role="tooltip"
+                 [class.invalid]="!(employee.name.length > 0)  && submitFlag"
+                 class="tooltip tooltip-right tooltip-validation tooltip-sm">
+            <input [(ngModel)]="employee.name" name="name" type="text" id="name" placeholder="" size="45">
+            <span class="tooltip-content">
+                    Este campo no puede estar vacío.
+                </span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="lastname" class="required">Apellidos</label>
+          <label for="lastname"
+                 aria-haspopup="true"
+                 role="tooltip"
+                 [class.invalid]="!(employee.lastName.length > 0)  && submitFlag"
+                 class="tooltip tooltip-right tooltip-validation tooltip-sm">
+            <input [(ngModel)]="employee.lastName" name="lastName" type="text" id="lastname" placeholder="" size="45">
+            <span class="tooltip-content">
+                    Este campo no puede estar vacío.
+                </span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="id" class="required">Identificación</label>
+          <label for="id"
+                 aria-haspopup="true"
+                 role="tooltip"
+                 [class.invalid]="!(employee.identificacion.length > 0)  && submitFlag"
+                 class="tooltip tooltip-right tooltip-validation tooltip-sm">
+            <input [(ngModel)]="employee.identificacion" name="id" type="text" id="id" placeholder="" size="35">
+            <span class="tooltip-content">
+                    Este campo no puede estar vacío.
+                </span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="tipo" class="required">Tipo de empleado</label>
+          <div class="select">
+            <select [(ngModel)]="employee.rol" name="category" id="tipo">
+              <option value="Docente" aria-selected="true">Docente</option>
+              <option value="Administrativo">Administrativo</option>
+              <option value="Servicios generales">Servicios generales</option>
+              <option value="Vigilancia">Vigilancia</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="profile">Foto</label>
+          <input type="file" id="profile">
+        </div>
+      </section>
+    </form>
+    <div class="spin" style="margin-top: 5em;" *ngIf="processingFlag">
+      <span class="spinner spinner-md spinner-inline"></span>
+      <label>Guardando...</label>
+    </div>
+
+  </clr-wizard-page>
+  <clr-wizard-page clrWizardPagePreventDefault="true"
+                   (clrWizardPageOnCommit)="submitRules()"
+                   (clrWizardPageOnCancel)="doCancel()">
+    <ng-template clrPageTitle>Asignar horario</ng-template>
+    <div class="form-group row">
+      <div class="col-lg-2 col-md-8 col-sm-12 col-xs-12" style="padding-bottom: 1rem;">
+        <div class="select">
+          <select [(ngModel)]="dia" name="dia" id="dia">
+            <option value="" selected>Día</option>
+            <option value="0">Lunes</option>
+            <option value="1">Martes</option>
+            <option value="2">Miercoles</option>
+            <option value="3">Jueves</option>
+            <option value="4">Viernes</option>
+            <option value="5">Sabado</option>
+            <option value="6">Domingo</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-8 col-sm-12 col-xs-12">
+        <input [(ngModel)]="hora_entrada" name="hora_entrada" type="text" placeholder="Entrada">
+      </div>
+      <div class="col-lg-2 col-md-8 col-sm-12 col-xs-12">
+        <input [(ngModel)]="hora_salida" name="hora_salida" type="text" placeholder="Salida">
+      </div>
+      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <button (click)="cleanTimetable()" class="btn btn-link" style="float: right;">Limpiar</button>
+        <button (click)="assignRule()" class="btn btn-link" style="float: right;">Asignar</button>
+      </div>
+    </div>
+
+    <div style="padding-top: 0.5rem;"></div>
+    <div #timetable id="timetable" class="timetable">
+    </div>
+
+    <div class="spin" style="margin-top: 5em;" *ngIf="processingFlag">
+      <span class="spinner spinner-md spinner-inline"></span>
+      <label>Guardando...</label>
+    </div>
+
+  </clr-wizard-page>
+  <clr-wizard-page clrWizardPagePreventDefault="true"
+  (clrWizardPageOnCommit)="finish()"
+  (clrWizardPageOnCancel)="doCancel()">
+    <ng-template clrPageTitle>Asociar huella</ng-template>
+    <div style="padding-top: 1rem;"></div>
+      <div class="row">
+        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12"></div>
+        <div class="col-lg-1 col-md-6 col-sm-12 col-xs-12">
+            <img *ngIf="fingerprint" style="margin-top: 3em; margin-left: -0.5rem; height: 6rem;" class="card-" src="/assets/finger.svg" alt="">
+            <img *ngIf="successful" style="margin-top: 3em; margin-left: -1.5rem; height: 6rem;" class="card-" src="/assets/ok.png" alt="">
+            <img *ngIf="error" style="margin-top: 3em; margin-left: -1.5rem; height: 6rem;" class="card-" src="/assets/error.png" alt="">
+        </div>
+      </div>
+      <div style="padding-top: 2rem;"></div>
+      <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12"></div>
+          <h3 style="text-align:center">{{status}}</h3>
+        </div>
+        <div style="padding-top: 2rem;"></div>
+      <div class="row">
+        <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+        </div>
+        <div class="col-lg-1 col-md-6 col-sm-12 col-xs-12">
+            <button *ngIf="enrollButton" (click)="startEnroll()" style="margin-left: -0.5rem;" class="btn btn-primary">Empezar</button>
+        </div>
+      </div>
+
+    <div class="spin" style="margin-top: 5em;" *ngIf="processingFlag">
+    <span class="spinner spinner-md spinner-inline"></span>
+    <label>Guardando...</label>
+    </div>
+
+    </clr-wizard-page>
+  
+</clr-wizard>
+
